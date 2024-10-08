@@ -25,7 +25,6 @@ class ChessHomePage:
       expect(self.primary_nav_elements.nth(counter), f"Href for {data_value} was not {href}.").to_have_attribute("href", href)
 
       #Visit the link 
-      print(f"hello {self.primary_nav_elements.nth(counter).get_attribute("href")}")
       self.primary_nav_elements.nth(counter).click()
       expect(self.page, f"Page redirected to was not {href}.").to_have_url(href)
 
