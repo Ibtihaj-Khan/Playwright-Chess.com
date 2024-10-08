@@ -27,3 +27,10 @@ def test_testing_nav_script(page):
   goToURL(page, "https://www.chess.com/")
   chessPage.click_primary_nav_item("play", "Play Bots", None)
 
+def test_verify_chesskid_link(page):
+  chessPage = ChessHomePage(page)
+
+  goToURL(page, "https://www.chess.com/")
+
+  chessPage.click_primary_nav_item("more", "ChessKid", None)
+

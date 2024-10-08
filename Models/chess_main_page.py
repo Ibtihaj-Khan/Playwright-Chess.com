@@ -8,6 +8,7 @@ class ChessHomePage:
     #Define Page selectors
     #Nav Bar
     self.primary_nav_elements = page.locator(".nav-component a.nav-link-component")
+    self.nav_bar_more_button = page.locator('.nav-component button[aria-label="More"]')
 
   """
   Script is used to verify the primary nav elements on the home page.
@@ -42,11 +43,22 @@ class ChessHomePage:
   """
   def click_primary_nav_item(self, nav_item, child_nav_item, expect_url):
     #Gonna use dynamic selectors
-    if child_nav_item is None:
+    if child_nav_item is None and nav_item != "more":
       self.page.locator(f"//a[@data-nav-link='{nav_item}']").click()
+    elif nav_item == "more":
+      self.nav_bar_more_button.hover()
+      self.page.locator(f"//div[@data-nav-panel='{nav_item}']//span[text() = '{child_nav_item}']/..").click()
     else:
       self.page.locator(f"//a[@data-nav-link='{nav_item}']").hover()
       self.page.locator(f"//div[@data-nav-panel='{nav_item}']//span[text() = '{child_nav_item}']/..").click()
 
-    if expect_url is not None:
+    if child_nav_item == "ChessKid":
+      self.page.wait_for_timeout(3000)
+      new_tab = self.page.context.pages[1]
+
+      expect(new_tab).to_have_url("https://www.chesskid.com/")
+
+      new_tab.locator('//span[contains(text(), "Play Now")]/..').click()
+      self.page.wait_for_timeout(3000)
+    elif expect_url is not None:
       expect(self.page, f"Expected url to be {expect_url}.").to_have_url(expect_url)

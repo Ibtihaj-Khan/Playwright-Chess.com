@@ -12,5 +12,6 @@ def test_verify_new_to_chess(page):
   home_page.click_primary_nav_item("learn", "Lessons", "https://www.chess.com/lessons")
   close_generic_modal(page)
   lessons_page.verify_course_block("how-to-move")
+  lessons_page.verify_course_block("playing-the-game")
 
 
